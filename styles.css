@@ -1770,12 +1770,41 @@ body::after {
 
 .clear-btn {
     background: linear-gradient(135deg, #f56565, #e53e3e);
+    color: white;
+    border: none;
+    padding: 20px 25px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .clear-btn:hover {
-    box-shadow: 0 6px 20px rgba(245, 101, 101, 0.4);
-    background: linear-gradient(135deg, #e53e3e, #c53030);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(245, 101, 101, 0.4);
+}
+
+.backspace-btn {
+    background: linear-gradient(135deg, #ed8936, #dd6b20);
+    color: white;
+    border: none;
+    padding: 20px 25px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(237, 137, 54, 0.3);
+    backdrop-filter: blur(10px);
+    min-width: 60px;
+}
+
+.backspace-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(237, 137, 54, 0.4);
 }
 
 .skip-btn {

@@ -257,6 +257,12 @@ class ChineseLearningGame {
             clearZhuyinBtn.addEventListener('click', () => this.clearZhuyinInput());
         }
 
+        // Backspace zhuyin button
+        const backspaceZhuyinBtn = document.getElementById('backspace-zhuyin');
+        if (backspaceZhuyinBtn) {
+            backspaceZhuyinBtn.addEventListener('click', () => this.backspaceZhuyinInput());
+        }
+
         // Character Recognition Event Handlers        
         if (this.charHintBtn) {
             this.charHintBtn.addEventListener('click', () => this.showCharHint());
@@ -2410,6 +2416,21 @@ class ChineseLearningGame {
                     this.zhuyinInput.style.borderColor = '#e2e8f0';
                 }
             }, 300);
+        }
+    }
+
+    backspaceZhuyinInput() {
+        if (this.zhuyinInput && this.zhuyinInput.value.length > 0) {
+            // Remove the last character
+            this.zhuyinInput.value = this.zhuyinInput.value.slice(0, -1);
+            
+            // Add visual feedback
+            this.zhuyinInput.style.borderColor = '#ed8936';
+            setTimeout(() => {
+                if (this.zhuyinInput) {
+                    this.zhuyinInput.style.borderColor = '#e2e8f0';
+                }
+            }, 200);
         }
     }
 
