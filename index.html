@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>學中文 - Learn Traditional Chinese</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">學中文 <span class="subtitle">Learn Traditional Chinese</span></h1>
+            <div class="score-board">
+                <div class="score">Score: <span id="score">0</span></div>
+                <div class="streak">Streak: <span id="streak">0</span></div>
+            </div>
+        </header>
+
+        <!-- Menu Screen -->
+        <div id="menu" class="menu-screen">
+            <div class="welcome">
+                <h2>Easy Chinese Learning!</h2>
+                <p>Learn Traditional Chinese at your own pace - no pressure, lots of fun! 😊</p>
+                
+                <div class="pronunciation-toggle">
+                    <button id="pronunciation-toggle" class="toggle-btn">
+                        <span class="toggle-icon">注</span>
+                        <span class="toggle-text">Zhuyin (注音)</span>
+                        <span class="toggle-switch">⇄</span>
+                    </button>
+                </div>
+
+                <!-- Menu Navigation Tabs -->
+                <div class="menu-navigation">
+                    <button class="nav-tab active" data-section="game-modes">🎮 Games</button>
+                    <button class="nav-tab" data-section="achievements">🏆 Achievements</button>
+                    <button class="nav-tab" data-section="save-load">💾 Save/Load</button>
+                </div>
+            </div>
+            
+            <!-- Game Modes Section -->
+            <div id="game-modes" class="menu-section active">
+                <div class="game-modes">
+                    <div class="game-card" data-mode="character-recognition">
+                        <div class="card-icon">漢</div>
+                        <h3>Character Recognition</h3>
+                        <p>Learn basic characters with simple words</p>
+                        <div class="difficulty">Easy Start</div>
+                    </div>
+                    
+                    <div class="game-card" data-mode="zhuyin-practice">
+                        <div class="card-icon">注</div>
+                        <h3>Zhuyin Practice</h3>
+                        <p>Practice pronunciation with plenty of time</p>
+                        <div class="difficulty">Easy Start</div>
+                    </div>
+                    
+                    <div class="game-card" data-mode="vocabulary-builder">
+                        <div class="card-icon">詞</div>
+                        <h3>Vocabulary Builder</h3>
+                        <p>Simple everyday phrases like "hello"</p>
+                        <div class="difficulty">Getting Better</div>
+                    </div>
+                    
+                    <div class="game-card" data-mode="stroke-order">
+                        <div class="card-icon">筆</div>
+                        <h3>Stroke Order</h3>
+                        <p>Easy tracing - any drawing counts!</p>
+                        <div class="difficulty">Getting Better</div>
+                    </div>
+                    
+                    <div class="game-card" data-mode="sentence-scramble">
+                        <div class="card-icon">句</div>
+                        <h3>Sentence Scramble</h3>
+                        <p>Put simple sentences together</p>
+                        <div class="difficulty">Challenge Me</div>
+                    </div>
+                    
+                    <div class="game-card" data-mode="similar-characters">
+                        <div class="card-icon">辨</div>
+                        <h3>Similar Characters</h3>
+                        <p>Learn basic character differences</p>
+                        <div class="difficulty">Challenge Me</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements Section -->
+            <div id="achievements-menu" class="menu-section">
+                <div class="achievements-container">
+                    <h2>🏆 Your Achievements</h2>
+                    
+                    <!-- Progress Overview -->
+                    <div class="progress-overview">
+                        <div class="stat-card">
+                            <div class="stat-number" id="total-games">0</div>
+                            <div class="stat-label">Games Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="total-score">0</div>
+                            <div class="stat-label">Total Score</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="best-streak-stat">0</div>
+                            <div class="stat-label">Best Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="achievements-unlocked">0</div>
+                            <div class="stat-label">Achievements</div>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Categories -->
+                    <div class="achievements-grid">
+                        <div class="achievement-category">
+                            <h3>🎯 Progress Milestones</h3>
+                            <div id="progress-achievements" class="achievements-list">
+                                <!-- Progress achievements will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="achievement-category">
+                            <h3>⭐ Performance Awards</h3>
+                            <div id="performance-achievements" class="achievements-list">
+                                <!-- Performance achievements will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="achievement-category">
+                            <h3>🎮 Game Mastery</h3>
+                            <div id="mastery-achievements" class="achievements-list">
+                                <!-- Mastery achievements will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievement Details -->
+                    <div class="achievement-details">
+                        <h3>💡 How to Unlock More Achievements</h3>
+                        <div class="tips-grid">
+                            <div class="tip-card">
+                                <span class="tip-icon">🎯</span>
+                                <div class="tip-content">
+                                    <strong>Play Regularly</strong>
+                                    <p>Complete games to unlock progress milestones</p>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-icon">⚡</span>
+                                <div class="tip-content">
+                                    <strong>Build Streaks</strong>
+                                    <p>Answer questions correctly in a row</p>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-icon">🎨</span>
+                                <div class="tip-content">
+                                    <strong>Try All Games</strong>
+                                    <p>Master different game modes for special badges</p>
+                                </div>
+                            </div>
+                            <div class="tip-card">
+                                <span class="tip-icon">🎯</span>
+                                <div class="tip-content">
+                                    <strong>Perfect Scores</strong>
+                                    <p>Get 100% accuracy for performance awards</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save/Load Section -->
+            <div id="save-load-menu" class="menu-section">
+                <div class="save-load-container">
+                    <h2>💾 Save & Load Progress</h2>
+                    
+                    <!-- Current Progress Summary -->
+                    <div class="current-progress-summary">
+                        <h3>📊 Current Progress</h3>
+                        <div class="progress-summary-grid">
+                            <div class="summary-item">
+                                <span class="summary-label">Games Completed:</span>
+                                <span class="summary-value" id="save-games-completed">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Total Score:</span>
+                                <span class="summary-value" id="save-total-score">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Best Streak:</span>
+                                <span class="summary-value" id="save-best-streak">0</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Achievements:</span>
+                                <span class="summary-value" id="save-achievements-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save/Load Actions -->
+                    <div class="save-load-actions">
+                        <div class="action-section">
+                            <h3>💾 Generate Save Code</h3>
+                            <p>Generate a save code that you can copy and paste to backup your progress.</p>
+                            <button id="export-save-btn" class="action-btn export-btn">
+                                <span class="btn-icon">🔢</span>
+                                <span class="btn-text">Generate Save Code</span>
+                            </button>
+                            <div id="save-code-display" class="save-code-container" style="display: none;">
+                                <label for="save-code-text">Your Save Code:</label>
+                                <textarea id="save-code-text" class="save-code-text" readonly rows="4" placeholder="Your save code will appear here..."></textarea>
+                                <button id="copy-save-code" class="action-btn copy-btn">
+                                    <span class="btn-icon">📋</span>
+                                    <span class="btn-text">Copy to Clipboard</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="action-section">
+                            <h3>📁 Load from Save Code</h3>
+                            <p>Paste a save code to restore your progress. This will replace your current progress.</p>
+                            <div class="import-section">
+                                <label for="import-code-text">Paste Save Code:</label>
+                                <textarea id="import-code-text" class="save-code-text" rows="4" placeholder="Paste your save code here..."></textarea>
+                                <button id="import-save-btn" class="action-btn import-btn">
+                                    <span class="btn-icon">⬆️</span>
+                                    <span class="btn-text">Load Progress</span>
+                                </button>
+                                <div id="import-feedback" class="import-feedback"></div>
+                            </div>
+                        </div>
+
+                        <div class="action-section danger-section">
+                            <h3>🗑️ Reset Progress</h3>
+                            <p class="danger-text">⚠️ This will permanently delete all your progress, scores, and achievements. This cannot be undone!</p>
+                            <button id="reset-progress-btn" class="action-btn danger-btn">
+                                <span class="btn-icon">🗑️</span>
+                                <span class="btn-text">Reset All Progress</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Save/Load Information -->
+                    <div class="save-load-info">
+                        <h3>💡 How It Works</h3>
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <span class="info-icon">💾</span>
+                                <div class="info-content">
+                                    <strong>Automatic Saving</strong>
+                                    <p>Your progress is automatically saved to your browser. No manual saving needed during normal play!</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <span class="info-icon">🔢</span>
+                                <div class="info-content">
+                                    <strong>Save Code</strong>
+                                    <p>Generate a unique code to backup your progress. Copy and save it somewhere safe for easy sharing!</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <span class="info-icon">📋</span>
+                                <div class="info-content">
+                                    <strong>Copy & Paste</strong>
+                                    <p>Simply copy your save code and paste it on any device to transfer your progress instantly!</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <span class="info-icon">🔄</span>
+                                <div class="info-content">
+                                    <strong>Fresh Start</strong>
+                                    <p>Reset everything to start over. Make sure to export a backup first if you want to keep your progress!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="game-screen hidden">
+            <div class="game-header">
+                <button id="back-btn" class="back-btn">← Back to Menu</button>
+                <div class="game-title" id="current-game-title"></div>
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <!-- Character Recognition Game -->
+                <div id="character-recognition-game" class="game-mode hidden">
+                    <!-- Options Panel -->
+                    <div id="character-options-panel" class="options-panel">
+                        <h4>Practice Options</h4>
+                        
+                        <div class="option-group">
+                            <label>Game Mode:</label>
+                            <select id="char-game-mode">
+                                <option value="standard">Standard (Zhuyin → Character)</option>
+                                <option value="reverse">Reverse (Character → Meaning)</option>
+                                <option value="audio">Audio (Sound → Character)</option>
+                                <option value="meaning">Meaning Only (English → Character)</option>
+                                <option value="mixed" selected>Mixed Practice (Challenging)</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group">
+                            <label>Question Type:</label>
+                            <select id="char-question-type">
+                                <option value="multiple-choice">Multiple Choice</option>
+                                <option value="text-input">Text Input</option>
+                                <option value="true-false">True/False</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group">
+                            <label>Difficulty:</label>
+                            <select id="char-difficulty">
+                                <option value="easy">Foundation (4 choices)</option>
+                                <option value="medium">Developing (6 choices)</option>
+                                <option value="hard" selected>Proficient (8 choices)</option>
+                                <option value="expert">Expert (10 choices)</option>
+                                <option value="master">Master (12 choices)</option>
+                                <option value="grandmaster">Grandmaster (15 choices)</option>
+                                <option value="legendary">Legendary (18 choices)</option>
+                                <option value="mythical">Mythical (20 choices)</option>
+                                <option value="custom">Custom (choose your own)</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group" id="custom-choices-group" style="display: none;">
+                            <label>Custom Number of Choices:</label>
+                            <input type="number" id="custom-choices" min="3" max="25" value="8" />
+                            <div class="difficulty-warning">⚠️ More than 15 choices = Extreme Challenge!</div>
+                        </div>
+
+                        <div class="option-group">
+                            <label>Character Type:</label>
+                            <select id="char-type-filter">
+                                <option value="all">All Characters</option>
+                                <option value="single">Single Characters Only</option>
+                                <option value="compound">Compound Words Only</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group checkbox-group">
+                            <label>
+                                <input type="checkbox" id="char-timer-mode" checked> Timer Mode (5-25 seconds based on difficulty)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="char-hint-mode"> Hint System (reduces points)
+                            </label>
+                            <label>
+                                <input type="checkbox" id="char-audio-mode"> Audio Support
+                            </label>
+                        </div>
+
+                        <button id="start-char-practice" class="start-practice-btn">Start Practice</button>
+                    </div>
+
+                    <!-- Game Content -->
+                    <div id="character-game-content" class="game-content-section hidden">
+                        <div class="game-header">
+                            <div class="timer-display" id="char-timer" style="display: none;">30</div>
+                            <div class="question-counter" id="char-question-counter">Question 1 of 10</div>
+                            <button id="char-hint-btn" class="hint-btn" style="display: none;">💡 Hint</button>
+                            <button id="char-skip-btn" class="skip-btn">Skip ⏭️</button>
+                        </div>
+
+                        <div class="question-section">
+                            <div class="question-display" id="char-question-display"></div>
+                            <div class="hint-area" id="char-hint-area" style="display: none;"></div>
+                            <button id="char-audio-btn" class="audio-btn" style="display: none;">🔊 Play Audio</button>
+                        </div>
+
+                        <div class="answer-section">
+                            <!-- Multiple Choice Options -->
+                            <div class="options-grid" id="character-options" style="display: none;"></div>
+                            
+                            <!-- Text Input -->
+                            <div id="char-text-input-section" style="display: none;">
+                                <input type="text" id="char-text-input" placeholder="Type your answer here..." />
+                                <button id="char-submit-text">Submit</button>
+                            </div>
+                            
+                            <!-- True/False -->
+                            <div id="char-true-false-section" style="display: none;">
+                                <div class="true-false-statement" id="char-tf-statement"></div>
+                                <div class="true-false-buttons">
+                                    <button id="char-true-btn" class="tf-btn true">True 正確</button>
+                                    <button id="char-false-btn" class="tf-btn false">False 錯誤</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vocabulary Builder Game -->
+                <div id="vocabulary-builder-game" class="game-mode hidden">
+                    <div class="question-section">
+                        <div class="word-display" id="vocab-question"></div>
+                        <div class="translation-type" id="translation-direction"></div>
+                    </div>
+                    <div class="options-grid" id="vocab-options"></div>
+                </div>
+
+                <!-- Zhuyin Practice Game -->
+                <div id="zhuyin-practice-game" class="game-mode hidden">
+                    <div class="question-section">
+                        <div class="character-display" id="zhuyin-character-question"></div>
+                        <div class="meaning-display" id="zhuyin-character-meaning"></div>
+                    </div>
+                    <div class="input-section">
+                        <input type="text" id="zhuyin-input" placeholder="Click buttons or type zhuyin (注音)..." autocomplete="off" readonly>
+                        <button id="clear-zhuyin" class="clear-btn">Clear</button>
+                        <button id="submit-zhuyin" class="submit-btn">Submit</button>
+                    </div>
+                    <div class="zhuyin-keyboard">
+                        <div class="keyboard-section">
+                            <div class="section-title">聲母 (Initials)</div>
+                            <div class="zhuyin-buttons initials">
+                                <button class="zhuyin-btn" data-zhuyin="ㄅ">ㄅ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄆ">ㄆ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄇ">ㄇ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄈ">ㄈ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄉ">ㄉ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄊ">ㄊ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄋ">ㄋ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄌ">ㄌ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄍ">ㄍ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄎ">ㄎ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄏ">ㄏ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄐ">ㄐ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄑ">ㄑ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄒ">ㄒ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄓ">ㄓ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄔ">ㄔ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄕ">ㄕ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄖ">ㄖ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄗ">ㄗ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄘ">ㄘ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄙ">ㄙ</button>
+                            </div>
+                        </div>
+                        <div class="keyboard-section">
+                            <div class="section-title">韻母 (Finals)</div>
+                            <div class="zhuyin-buttons finals">
+                                <button class="zhuyin-btn" data-zhuyin="ㄚ">ㄚ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄛ">ㄛ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄜ">ㄜ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄝ">ㄝ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄞ">ㄞ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄟ">ㄟ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄠ">ㄠ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄡ">ㄡ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄢ">ㄢ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄣ">ㄣ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄤ">ㄤ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄥ">ㄥ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄦ">ㄦ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄧ">ㄧ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄨ">ㄨ</button>
+                                <button class="zhuyin-btn" data-zhuyin="ㄩ">ㄩ</button>
+                            </div>
+                        </div>
+                        <div class="keyboard-section">
+                            <div class="section-title">聲調 (Tones) & 空格 (Space)</div>
+                            <div class="zhuyin-buttons tones">
+                                <button class="zhuyin-btn tone-btn" data-zhuyin="">一聲</button>
+                                <button class="zhuyin-btn tone-btn" data-zhuyin="ˊ">二聲 ˊ</button>
+                                <button class="zhuyin-btn tone-btn" data-zhuyin="ˇ">三聲 ˇ</button>
+                                <button class="zhuyin-btn tone-btn" data-zhuyin="ˋ">四聲 ˋ</button>
+                                <button class="zhuyin-btn tone-btn" data-zhuyin="˙">輕聲 ˙</button>
+                                <button class="zhuyin-btn space-btn" data-zhuyin=" ">Space</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stroke Order Game -->
+                <div id="stroke-order-game" class="game-mode hidden">
+                    <div class="stroke-practice" id="stroke-area">
+                        <!-- Tutorial content will be dynamically generated here -->
+                    </div>
+                </div>
+
+                <!-- Sentence Scramble Game -->
+                <div id="sentence-scramble-game" class="game-mode hidden">
+                    <div class="question-section">
+                        <div class="scrambled-sentence-container">
+                            <div class="english-hint" id="english-hint"></div>
+                            <div class="audio-controls">
+                                <button id="play-audio-btn" class="audio-btn">🔊 Listen</button>
+                                <button id="show-zhuyin-btn" class="audio-btn">注音</button>
+                            </div>
+                            <div class="zhuyin-display hidden" id="zhuyin-hint"></div>
+                        </div>
+                    </div>
+                    <div class="scramble-area">
+                        <div class="word-bank" id="word-bank">
+                            <div class="bank-title">Word Bank</div>
+                            <div class="words-container" id="words-container"></div>
+                        </div>
+                        <div class="sentence-builder" id="sentence-builder">
+                            <div class="builder-title">Build the sentence:</div>
+                            <div class="sentence-slots" id="sentence-slots"></div>
+                            <button id="check-sentence-btn" class="submit-btn">Check Sentence</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Similar Characters Game -->
+                <div id="similar-characters-game" class="game-mode hidden">
+                    <div class="similar-chars-content">
+                        <div class="comparison-section">
+                            <div class="chars-comparison" id="chars-comparison">
+                                <!-- Character comparison will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="differences-section">
+                            <div class="differences-explanation" id="differences-explanation">
+                                <!-- Differences explanation will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <div class="quiz-section" id="quiz-section">
+                            <!-- Quiz questions will be populated here -->
+                        </div>
+                        
+                        <div class="similar-chars-controls">
+                            <button id="show-explanation-btn" class="similar-btn explanation-btn">💡 Show Explanation</button>
+                            <button id="next-comparison-btn" class="similar-btn next-btn">➡️ Next Comparison</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-footer">
+                <div class="feedback" id="feedback"></div>
+                <button id="next-question" class="next-btn hidden">Next Question</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen hidden">
+            <div class="results-content">
+                <h2>Game Complete!</h2>
+                <div class="final-score">
+                    <div class="score-item">
+                        <span class="label">Final Score:</span>
+                        <span class="value" id="final-score">0</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="label">Accuracy:</span>
+                        <span class="value" id="accuracy">0%</span>
+                    </div>
+                    <div class="score-item">
+                        <span class="label">Best Streak:</span>
+                        <span class="value" id="best-streak">0</span>
+                    </div>
+                </div>
+                <div class="achievements" id="achievements"></div>
+                <div class="action-buttons">
+                    <button id="play-again-btn" class="play-again-btn">Play Again</button>
+                    <button id="menu-btn" class="menu-btn">Back to Menu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="gameData.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
