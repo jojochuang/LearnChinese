@@ -67,7 +67,7 @@
     .card ul{margin:0 0 12px;padding-left:1.25rem;color:#334155;line-height:1.65}
     .card li{margin-bottom:6px}
     .btnRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    a.btn{
+    a.btn,button.btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -81,18 +81,12 @@
       color:#fff;
       box-shadow:0 8px 24px rgba(37,99,235,.35);
     }
-    a.btn.secondary{
+    a.btn.secondary,button.btn.secondary{
       background:#fff;
       color:#1f2937;
       border:1px solid rgba(31,41,55,.16);
       box-shadow:none;
       font-weight:650;
-    }
-    .note{
-      margin-top:14px;
-      color:rgba(255,255,255,.78);
-      font-size:.95rem;
-      line-height:1.55;
     }
     code{background:rgba(255,255,255,.12);color:#fff;padding:2px 6px;border-radius:8px}
     .footer{margin-top:22px;color:rgba(255,255,255,.72);font-size:.9rem;line-height:1.6}
@@ -101,6 +95,70 @@
     .faq-a{margin:4px 0 0;color:#334155;line-height:1.65}
     .card a:not(.btn):not(.secondary){color:#1d4ed8}
     .card a:not(.btn):not(.secondary):hover{text-decoration:underline}
+    /* 與聽音辨字／聽寫工具頁相同的自製試算表對話框 */
+    .custom-sheet-dialog{
+      position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;
+      padding:16px;box-sizing:border-box;
+    }
+    .custom-sheet-dialog.hidden{display:none}
+    .custom-sheet-dialog-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+    .custom-sheet-dialog-panel{
+      position:relative;width:100%;max-width:420px;max-height:min(90vh,640px);overflow-y:auto;
+      background:#fff;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,.25);
+      -webkit-overflow-scrolling:touch;
+    }
+    .custom-sheet-dialog-header{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 16px;border-bottom:1px solid #e0e0e0;
+    }
+    .custom-sheet-dialog-header h3{margin:0;font-size:1.15em;color:#333}
+    .custom-sheet-dialog-close{
+      border:none;background:#eee;width:36px;height:36px;border-radius:50%;
+      font-size:1.4em;line-height:1;cursor:pointer;color:#555;
+    }
+    .custom-sheet-dialog-close:hover{background:#ddd}
+    .custom-sheet-dialog-body{padding:16px;font-size:.9em;color:#444;line-height:1.55}
+    .custom-sheet-dialog-body p{margin:0 0 10px}
+    .custom-sheet-dialog-body ol{margin:0 0 14px 1.2rem;padding:0}
+    .custom-sheet-dialog-body li{margin-bottom:8px}
+    .custom-sheet-dialog-body a{color:#1565c0;word-break:break-all}
+    .custom-sheet-dialog-body code{background:#e5e7eb;color:#1f2937;padding:2px 6px;border-radius:6px}
+    .custom-sheet-dialog-body textarea{
+      width:100%;min-height:76px;margin:8px 0 12px;padding:10px 12px;font-size:.95em;
+      border:2px solid #90caf9;border-radius:12px;box-sizing:border-box;font-family:inherit;resize:vertical;
+    }
+    .custom-sheet-dialog-lesson{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+    .custom-sheet-dialog-lesson input,.custom-sheet-dialog-lesson select{
+      max-width:100%;padding:8px 12px;font-size:1em;border:2px solid #a5d6a7;border-radius:12px;
+      box-sizing:border-box;
+    }
+    .custom-sheet-dialog-lesson input{max-width:100px}
+    .custom-sheet-dialog-hint{font-size:.85em;color:#666;margin-bottom:12px}
+    .custom-sheet-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .custom-sheet-result-box{
+      margin-top:14px;padding-top:14px;border-top:1px dashed #bdbdbd;display:none;
+    }
+    .custom-sheet-result-box.show{display:block}
+    .custom-sheet-result-box label{display:block;font-size:.88em;color:#555;margin-bottom:6px}
+    .custom-sheet-result-url{
+      width:100%;padding:10px 12px;font-size:.75em;border:2px solid #81c784;border-radius:10px;
+      background:#f1f8e9;color:#1b5e20;box-sizing:border-box;word-break:break-all;
+    }
+    .dlg-btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:999px;border:none;font-weight:700;cursor:pointer;font-size:.95em;font-family:inherit;
+    }
+    .dlg-btn-primary{
+      background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+      box-shadow:0 8px 24px rgba(37,99,235,.35);
+    }
+    .dlg-btn-secondary{
+      background:#fff;color:#1f2937;border:1px solid rgba(31,41,55,.16);font-weight:650;
+    }
+    .custom-sheet-dialog-body .dlg-msg-error{display:none;margin-top:10px;text-align:left;color:#b91c1c;font-size:.9em}
+    .btnRow button.btn{
+      cursor:pointer;font:inherit;font-size:inherit;text-decoration:none;
+    }
   </style>
 </head>
 <body>
@@ -109,7 +167,7 @@
       <div>
         <h1>中文備課工具</h1>
         <div class="subtitle">
-          本站提供給老師與學生使用的線上練習工具，目前包含聽音辨字遊戲與聽寫語詞考試。內容以課堂複習、字詞聽辨與書寫練習為主，可搭配 Google 試算表或 CSV 自訂教材。
+          本站提供給老師與學生使用的線上練習工具，目前包含聽音辨字遊戲與聽寫語詞考試。內容以課堂複習、字詞聽辨與書寫練習為主，可搭配自製的課程試算表做成自己的上課所需遊戲或是聽寫考試。
         </div>
         <nav class="site-nav" aria-label="頁面導覽">
           <a href="#about">關於本站</a>
@@ -125,36 +183,30 @@
       <section class="card">
         <h2>聽音辨字遊戲</h2>
         <p>
-          依試算表中的詞語、圖片與注音資料出題，讓學生聽音後選出正確答案。可依課程進度調整內容，適合字詞辨識、聽力與拼音／注音複習。
-          支援「圖片＋注音」「全注音」「全中文」等顯示模式，方便依年級與教材切換難度。
+          依試算表中的詞語、圖片與注音資料出題，讓學生聽音後選出正確答案。可依課程進度調整內容，複習中文語詞和注音。支援「圖片＋注音」「全注音」「全中文」等顯示模式，可以依學生能力選擇隱藏「中文提示」或是「英文提示」。適合學習注音的學生，也適合只說英文的學生。
         </p>
         <div class="btnRow">
           <a class="btn" href="https://jojochuang.github.io/listening_game/index.html">開始使用</a>
-          <a class="btn secondary" href="https://jojochuang.github.io/listening_game/index.html?sheet_id=1264gdkuMnIn2k5L5KM69yumBfJFdYVhxzzsC-2R5Q2U&gid=922303464&lesson=13&mode=easy">示範連結</a>
+          <button type="button" class="btn secondary" id="btnOpenLcListeningDialog">自製遊戲內容</button>
         </div>
       </section>
 
       <section class="card">
         <h2>聽寫語詞考試</h2>
         <p>
-          由試算表或本機 CSV 產生聽寫試卷，可設定計時、全螢幕投影，並支援預覽與匯出 PDF，方便課堂統一施測或印發練習單。
-          老師可先備妥詞表與題序，上課時直接開啟同一連結即可重複使用或微調內容。
+          由試算表產生聽寫試卷，可設定計時每一題的時間，每30秒復述一次、全螢幕投影，並支援預覽與匯出 PDF（letter size），方便課堂統一施測或印發練習單。老師可先備妥詞表與題序，上課時直接開啟同一連結即可重複使用或微調內容。可以中文字全空白只印注音，也可以個別點擊中文字切換只要顯示中文或是只要顯示注音，製作中文混合注音的考試。
         </p>
         <div class="btnRow">
           <a class="btn" href="https://jojochuang.github.io/dictation_exam/index.html">開始使用</a>
+          <button type="button" class="btn secondary" id="btnOpenLcDictationDialog">自製語詞考試</button>
         </div>
       </section>
-    </div>
-
-    <div class="note">
-      你可以把自己的試算表帶入工具網址參數（例如 <code>?sheet_id=...&amp;gid=...</code>）後，將完整網址書籤或分享給其他老師使用。
     </div>
 
     <section class="card wide" id="about">
       <h2>關於本站</h2>
       <p>
-        「中文備課工具」由個人基於教學需求整理與維護，目的是讓老師能用簡單的試算表或檔案準備聽音、聽寫類活動，減少重複製作紙本或投影片的時間。
-        各工具以瀏覽器運行為主，學生端通常無須安裝軟體；實際是否適用於您的班級，仍請依校內資訊安全與個資規範自行評估。
+        「中文備課工具」由個人基於教學需求整理與維護，目的是讓老師能用簡單的試算表或檔案準備聽音、聽寫類活動，減少重複製作紙本或投影片的時間。各工具以瀏覽器運行為主，學生端通常無須安裝軟體；實際是否適用於您的班級，仍請自己製作試算表。
       </p>
       <p>
         本站首頁說明各工具用途與操作要點；實際作答與試卷產生則在對應的工具頁面完成。若您發現錯字、連結失效或希望建議改進項目，歡迎透過您已公開的聯絡方式告知維護者。
@@ -166,12 +218,12 @@
       <h3>聽音辨字</h3>
       <ul>
         <li>在 Google 試算表依工具說明準備欄位（詞語、音檔或圖片連結等，依各工具頁面指示）。</li>
-        <li>取得試算表 ID 与工作表 gid，拼在網址參數中（例如 <code>sheet_id=</code> 與 <code>gid=</code>）。</li>
-        <li>將完整網址儲存為書籤或傳給學生；示範連結可先做為格式參考。</li>
+        <li>從自製且開放的試算表網址列複製網址，貼在「自製遊戲內容」對話框裡，會自動製作好您的專屬連結。</li>
+        <li>將完整網址儲存為書籤或傳給學生。</li>
       </ul>
       <h3>聽寫語詞考試</h3>
       <ul>
-        <li>可從試算表載入詞表，或依工具頁說明匯出／準備 CSV 後於本機載入。</li>
+        <li>從自製且開放的試算表網址列複製網址，貼在「自製語詞考試」對話框裡，會自動製作好您的專屬連結。</li>
         <li>課堂上可全螢幕顯示題目與計時；需要紙本時再使用預覽或 PDF 下載功能。</li>
         <li>同一套設定存成固定網址後，下節課只需微調試算表內容即可更新試題。</li>
       </ul>
@@ -184,7 +236,7 @@
       <p class="faq-q">沒有網路可以使用嗎？</p>
       <p class="faq-a">這些工具仰賴線上載入頁面與試算表等資源，請在穩定連線環境下使用。若學校封鎖特定網域，需請資訊組協助放行。</p>
       <p class="faq-q">學生資料會上傳到本站嗎？</p>
-      <p class="faq-a">聽寫與聽音工具以瀏覽器端運算為主，詞表來源多為您提供的試算表或本機檔案。詳細請見下方隱私權說明；若校內有個資規範，請一併遵守。</p>
+      <p class="faq-a">聽寫與聽音工具以瀏覽器端運算為主，詞表來源為您提供的試算表，沒有收集學生資料的操作。詳細請見下方隱私權說明；若校內有個資規範，請一併遵守。</p>
       <p class="faq-q">可以商用或轉售嗎？</p>
       <p class="faq-a">本站標示為個人教學用途整理，轉載、改作或商業利用請自行確認授權與法規；本站不提供保證或擔保。</p>
     </section>
@@ -207,5 +259,270 @@
       © 中文備課工具（個人教學用途）· <a href="#about">關於</a> · <a href="#privacy">隱私權</a>
     </div>
   </div>
+
+  <div id="lcListeningDialog" class="custom-sheet-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="lcListeningDialogTitle">
+    <div class="custom-sheet-dialog-backdrop" id="lcListeningDialogBackdrop"></div>
+    <div class="custom-sheet-dialog-panel">
+      <div class="custom-sheet-dialog-header">
+        <h3 id="lcListeningDialogTitle">自製遊戲內容</h3>
+        <button type="button" class="custom-sheet-dialog-close" id="lcListeningDialogClose" aria-label="關閉">×</button>
+      </div>
+      <div class="custom-sheet-dialog-body">
+        <p><strong>聽音辨字的試算表範本</strong>（請先開啟後建立副本再編輯）：</p>
+        <p><a href="https://docs.google.com/spreadsheets/d/1Lx1GF2YiNLHscirg-l8nfqkUKDiKEUiBoTNqLHmWBeY/edit?gid=497677583#gid=497677583" target="_blank" rel="noopener noreferrer">開啟 Google 試算表範本</a></p>
+        <ol>
+          <li>在範本中按「檔案 → 建立副本」，複製到自己的雲端硬碟。</li>
+          <li>依試算表內說明，在指定欄位填入語詞、圖片網址、英文翻譯等。</li>
+          <li>按「共用」，將一般存取權設為<strong>知道連結的任何人可檢視</strong>。</li>
+          <li>複製瀏覽器網址列的完整網址，貼在下方，按「生成專屬遊戲網址」。</li>
+        </ol>
+        <label for="lcListeningPasteUrl"><strong>貼上你的試算表網址</strong></label>
+        <textarea id="lcListeningPasteUrl" placeholder="https://docs.google.com/spreadsheets/d/…" autocomplete="off" spellcheck="false"></textarea>
+        <div class="custom-sheet-dialog-lesson">
+          <label for="lcListeningLessonInput">從第幾課開始</label>
+          <input type="number" id="lcListeningLessonInput" min="1" value="1" />
+        </div>
+        <div class="custom-sheet-dialog-lesson">
+          <label for="lcListeningModeSelect">顯示模式</label>
+          <select id="lcListeningModeSelect">
+            <option value="easy">圖片＋注音</option>
+            <option value="hard">全注音</option>
+            <option value="chinese">全中文</option>
+          </select>
+        </div>
+        <p class="custom-sheet-dialog-hint">若網址中沒有 gid，會使用第一個工作表。產生的連結會開啟線上的聽音辨字遊戲頁。</p>
+        <div class="custom-sheet-dialog-actions">
+          <button type="button" class="dlg-btn dlg-btn-primary" id="lcListeningGenBtn">生成專屬遊戲網址</button>
+        </div>
+        <div id="lcListeningGenErr" class="dlg-msg-error"></div>
+        <div id="lcListeningResultBox" class="custom-sheet-result-box">
+          <label for="lcListeningResultUrl">專屬遊戲網址</label>
+          <input type="text" id="lcListeningResultUrl" class="custom-sheet-result-url" readonly />
+          <div class="custom-sheet-dialog-actions" style="margin-top:10px">
+            <button type="button" class="dlg-btn dlg-btn-secondary" id="lcListeningCopyBtn">Copy 網址</button>
+            <button type="button" class="dlg-btn dlg-btn-primary" id="lcListeningOpenBtn">開啟遊戲</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="lcDictationDialog" class="custom-sheet-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="lcDictationDialogTitle">
+    <div class="custom-sheet-dialog-backdrop" id="lcDictationDialogBackdrop"></div>
+    <div class="custom-sheet-dialog-panel">
+      <div class="custom-sheet-dialog-header">
+        <h3 id="lcDictationDialogTitle">自製語詞考試</h3>
+        <button type="button" class="custom-sheet-dialog-close" id="lcDictationDialogClose" aria-label="關閉">×</button>
+      </div>
+      <div class="custom-sheet-dialog-body">
+        <p><strong>聽寫語詞考試試算表範本</strong>（請先開啟後建立副本再編輯）：</p>
+        <p><a href="https://docs.google.com/spreadsheets/d/14YHdAeAybdRmGX7VydaEpI_FMx6wvDPJB4bSq0U9tck/edit?gid=1273402351#gid=1273402351" target="_blank" rel="noopener noreferrer">開啟 Google 試算表範本</a></p>
+        <ol>
+          <li>在範本中按「檔案 → 建立副本」，複製到自己的雲端硬碟。</li>
+          <li>依試算表內說明編輯：第一列 A 欄須為「目錄」，B～K 欄為第 1～10 題；每格可貼上整段語詞（最多四個中文字）。</li>
+          <li>按「共用」，將一般存取權設為<strong>知道連結的任何人可檢視</strong>。</li>
+          <li>複製瀏覽器網址列的完整網址（請保留 <code>gid=…</code> 以指定工作表分頁），貼在下方，按「生成專屬考試網址」。</li>
+        </ol>
+        <label for="lcDictationPasteUrl"><strong>貼上你的試算表網址</strong></label>
+        <textarea id="lcDictationPasteUrl" placeholder="https://docs.google.com/spreadsheets/d/…" autocomplete="off" spellcheck="false"></textarea>
+        <p class="custom-sheet-dialog-hint">若網址中沒有 gid，會匯出試算表的第一個工作表。產生的連結會開啟線上的聽寫語詞考試頁。</p>
+        <div class="custom-sheet-dialog-actions">
+          <button type="button" class="dlg-btn dlg-btn-primary" id="lcDictationGenBtn">生成專屬考試網址</button>
+        </div>
+        <div id="lcDictationGenErr" class="dlg-msg-error"></div>
+        <div id="lcDictationResultBox" class="custom-sheet-result-box">
+          <label for="lcDictationResultUrl">專屬考試網址</label>
+          <input type="text" id="lcDictationResultUrl" class="custom-sheet-result-url" readonly />
+          <div class="custom-sheet-dialog-actions" style="margin-top:10px">
+            <button type="button" class="dlg-btn dlg-btn-secondary" id="lcDictationCopyBtn">Copy 網址</button>
+            <button type="button" class="dlg-btn dlg-btn-primary" id="lcDictationOpenBtn">開啟考試</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var LISTEN_BASE = 'https://jojochuang.github.io/listening_game/index.html';
+      var DICT_BASE = 'https://jojochuang.github.io/dictation_exam/index.html';
+
+      function extractGidFromUrl(url) {
+        if (!url || typeof url !== 'string') return '';
+        var m = url.match(/[?&#]gid=(\d+)/i);
+        return m ? m[1] : '';
+      }
+      function extractSheetIdFromPaste(text) {
+        var t = (text || '').trim();
+        var m = t.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/i);
+        return m ? m[1] : '';
+      }
+      function buildListeningToolUrl(sheetIdVal, gidVal, lessonNum, modeVal) {
+        var u = new URL(LISTEN_BASE);
+        u.searchParams.set('sheet_id', sheetIdVal);
+        u.searchParams.set('gid', gidVal || '0');
+        u.searchParams.set('lesson', String(lessonNum));
+        u.searchParams.set('mode', modeVal || 'easy');
+        return u.toString();
+      }
+      function buildDictationToolUrl(sheetIdVal, gidVal) {
+        var u = new URL(DICT_BASE);
+        u.searchParams.set('sheet_id', sheetIdVal);
+        u.searchParams.set('gid', gidVal || '0');
+        return u.toString();
+      }
+
+      function initDialog(opts) {
+        var dialog = document.getElementById(opts.dialogId);
+        var openBtn = document.getElementById(opts.openBtnId);
+        var closeBtn = document.getElementById(opts.closeBtnId);
+        var backdrop = document.getElementById(opts.backdropId);
+        var pasteEl = document.getElementById(opts.pasteId);
+        var genBtn = document.getElementById(opts.genBtnId);
+        var errEl = document.getElementById(opts.errId);
+        var resultBox = document.getElementById(opts.resultBoxId);
+        var resultUrlEl = document.getElementById(opts.resultUrlId);
+        var copyBtn = document.getElementById(opts.copyBtnId);
+        var openToolBtn = document.getElementById(opts.openToolBtnId);
+        if (!dialog || !openBtn) return;
+
+        function showDialog(show) {
+          if (show) {
+            dialog.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            if (pasteEl) pasteEl.focus();
+          } else {
+            dialog.classList.add('hidden');
+            document.body.style.overflow = '';
+          }
+        }
+        function hideErr() {
+          if (errEl) {
+            errEl.style.display = 'none';
+            errEl.textContent = '';
+          }
+        }
+        function showErr(msg) {
+          if (errEl) {
+            errEl.style.display = 'block';
+            errEl.textContent = msg;
+          }
+          if (resultBox) resultBox.classList.remove('show');
+        }
+
+        openBtn.addEventListener('click', function () {
+          hideErr();
+          if (resultBox) resultBox.classList.remove('show');
+          showDialog(true);
+        });
+        if (closeBtn) closeBtn.addEventListener('click', function () { showDialog(false); });
+        if (backdrop) backdrop.addEventListener('click', function () { showDialog(false); });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && dialog && !dialog.classList.contains('hidden')) {
+            showDialog(false);
+          }
+        });
+
+        if (genBtn) {
+          genBtn.addEventListener('click', function () {
+            hideErr();
+            var raw = (pasteEl && pasteEl.value ? pasteEl.value : '').trim();
+            if (!raw) {
+              showErr('請貼上試算表網址。');
+              return;
+            }
+            var sid = extractSheetIdFromPaste(raw);
+            if (!sid) {
+              showErr('無法辨識試算表。請貼上 Google 試算表連結（網址中需有 /spreadsheets/d/…）。');
+              return;
+            }
+            var gidParsed = extractGidFromUrl(raw) || '0';
+            var url = opts.buildUrl(sid, gidParsed);
+            if (resultUrlEl) resultUrlEl.value = url;
+            if (resultBox) resultBox.classList.add('show');
+          });
+        }
+
+        function copyText(text, onDone) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(onDone).catch(function () {
+              execCopyFallback(text, onDone);
+            });
+          } else {
+            execCopyFallback(text, onDone);
+          }
+        }
+        function execCopyFallback(text, onDone) {
+          var ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta);
+          if (onDone) onDone();
+        }
+
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function () {
+            var t = (resultUrlEl && resultUrlEl.value ? resultUrlEl.value : '').trim();
+            if (!t) return;
+            var label = copyBtn.textContent;
+            copyText(t, function () {
+              copyBtn.textContent = '已複製';
+              setTimeout(function () { copyBtn.textContent = label; }, 1500);
+            });
+          });
+        }
+        if (openToolBtn) {
+          openToolBtn.addEventListener('click', function () {
+            var t = (resultUrlEl && resultUrlEl.value ? resultUrlEl.value : '').trim();
+            if (!t) return;
+            window.location.href = t;
+          });
+        }
+      }
+
+      initDialog({
+        dialogId: 'lcListeningDialog',
+        openBtnId: 'btnOpenLcListeningDialog',
+        closeBtnId: 'lcListeningDialogClose',
+        backdropId: 'lcListeningDialogBackdrop',
+        pasteId: 'lcListeningPasteUrl',
+        genBtnId: 'lcListeningGenBtn',
+        errId: 'lcListeningGenErr',
+        resultBoxId: 'lcListeningResultBox',
+        resultUrlId: 'lcListeningResultUrl',
+        copyBtnId: 'lcListeningCopyBtn',
+        openToolBtnId: 'lcListeningOpenBtn',
+        buildUrl: function (sid, gid) {
+          var lessonEl = document.getElementById('lcListeningLessonInput');
+          var modeEl = document.getElementById('lcListeningModeSelect');
+          var lessonNum = parseInt(lessonEl && lessonEl.value ? lessonEl.value : '1', 10);
+          if (isNaN(lessonNum) || lessonNum < 1) lessonNum = 1;
+          var modeVal = (modeEl && modeEl.value) ? modeEl.value : 'easy';
+          return buildListeningToolUrl(sid, gid, lessonNum, modeVal);
+        }
+      });
+
+      initDialog({
+        dialogId: 'lcDictationDialog',
+        openBtnId: 'btnOpenLcDictationDialog',
+        closeBtnId: 'lcDictationDialogClose',
+        backdropId: 'lcDictationDialogBackdrop',
+        pasteId: 'lcDictationPasteUrl',
+        genBtnId: 'lcDictationGenBtn',
+        errId: 'lcDictationGenErr',
+        resultBoxId: 'lcDictationResultBox',
+        resultUrlId: 'lcDictationResultUrl',
+        copyBtnId: 'lcDictationCopyBtn',
+        openToolBtnId: 'lcDictationOpenBtn',
+        buildUrl: function (sid, gid) {
+          return buildDictationToolUrl(sid, gid);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
