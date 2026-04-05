@@ -1,0 +1,5 @@
+# https://jojochuang.github.io/LearnChinese/
+User-agent: *
+Allow: /
+
+Sitemap: https://jojochuang.github.io/LearnChinese/sitemap.xml
